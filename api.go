@@ -1,10 +1,14 @@
 package auconfigapi
 
 // Type for a config item validation function.
-type ConfigValidationFunc  func(value interface{}) error
+//
+// Important: note that you are given the KEY of the config item. This avoids having to use interface{} here,
+// so you won't have to do type casting. Instead, just look up the value with
+// viper.GetString(key), or viper.GetUint(key), or whatever you need.
+type ConfigValidationFunc  func(key string) error
 
 // Empty validation function. Use this if you don't need validation for a key.
-func ConfigNeedsNoValidation(_ interface{}) error {
+func ConfigNeedsNoValidation(_ string) error {
 	return nil
 }
 
