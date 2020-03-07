@@ -14,11 +14,11 @@ func ConfigNeedsNoValidation(_ string) error {
 
 // Represents a configuration item for go-autumn-config.
 //
-// When you call auconfig.Setup() with a list of these, it will configure a command line flag and
+// When you call auconfig.Setup(...) with a list of these, it will configure a command line flag and
 // an environment variable.
 //
 // When you request configuration to be loaded, which you must do
-// yourself with a call to auconfig.Setup(), every key is assigned its value by going through
+// yourself with a call to auconfig.Load(), every key is assigned its value by going through
 // the following precedence list:
 //
 //  - command line flag
