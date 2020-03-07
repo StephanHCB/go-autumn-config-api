@@ -1,4 +1,4 @@
-package go_autumn_config_api
+package auconfigapi
 
 // Type for a config item validation function.
 type ConfigValidationFunc  func(value interface{}) error
