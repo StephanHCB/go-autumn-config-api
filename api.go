@@ -44,9 +44,13 @@ type ConfigItem struct {
 	// You must always specify a value that has a type, or else detection of types will not work.
 	// That is, "" is ok, nil is not. Numeric types need a type specifier such as int32(-10).
 	//
+	// You can also specify a struct type, but note that for values inside struct types, command line
+	// flags are not supported.
+	//
 	// Examples: "localhost",
 	//           uint(8080),
-	//           []string{}  (for a list of strings)
+	//           []string{}  (for a list of strings),
+	//           SomeStructDefinedInMyCode{SomeField: "someDefaultValue"}
 	Default     interface{}
 
 	// A human readable description.
