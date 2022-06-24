@@ -1,18 +1,19 @@
 package auconfigapi
 
-// Type for a config item validation function.
+// ConfigValidationFunc is the type for a config item validation function.
 //
 // Important: note that you are given the KEY of the config item. This avoids having to use interface{} here,
 // so you won't have to do type casting. Instead, just look up the value with
-// viper.GetString(key), or viper.GetUint(key), or whatever you need.
-type ConfigValidationFunc  func(key string) error
+// viper.GetString(key), or viper.GetUint(key), ... (if using go-autumn-config),
+// or auconfigenv.Get(key) (if using go-autumn-config-env).
+type ConfigValidationFunc func(key string) error
 
-// Empty validation function. Use this if you don't need validation for a key.
+// ConfigNeedsNoValidation is an empty validation function. Use this if you don't need validation for a key.
 func ConfigNeedsNoValidation(_ string) error {
 	return nil
 }
 
-// Represents a configuration item for go-autumn-config.
+// ConfigItem represents a configuration item for go-autumn-config.
 //
 // When you call auconfig.Setup(...) with a list of these, it will configure a command line flag and
 // an environment variable.
@@ -37,7 +38,7 @@ type ConfigItem struct {
 	// Examples: "server.host",
 	//           "server.port",
 	//           "profiles"
-	Key         string
+	Key string
 
 	// Default value that also specifies the type of the value.
 	//
@@ -51,7 +52,7 @@ type ConfigItem struct {
 	//           uint(8080),
 	//           []string{}  (for a list of strings),
 	//           SomeStructDefinedInMyCode{SomeField: "someDefaultValue"}
-	Default     interface{}
+	Default interface{}
 
 	// A human readable description.
 	//
@@ -63,17 +64,17 @@ type ConfigItem struct {
 	// Override name for environment variable (optional)
 	//
 	// If left blank, defaults to CONFIG_ + uppercase key with all non [a-z0-9] replaced with _.
-	EnvName     string
+	EnvName string
 
 	// Override name for the command line flag (optional)
 	//
 	// If left blank, defaults to the key.
-	FlagName    string
+	FlagName string
 
 	// Validation function that should return an error if the validation failed
 	//
 	// You MUST provide one, but you can just use ConfigNeedsNoValidation
-	Validate    ConfigValidationFunc
+	Validate ConfigValidationFunc
 }
 
 // Type for a fatal error handler during initial configuration load. Expected to halt program execution.
